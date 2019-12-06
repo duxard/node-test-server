@@ -1,31 +1,22 @@
-const http = require("http");
-const sendFile = require("./helpers/sendfile");
+const express = require('express');
+const jwt = require('jsonwebtoken');
 
-const port = 3000;
+const port = 8000;
 const host = "127.0.0.1";
 
-const server = http.createServer((req, res) => {
-  console.log(`Request was made: ${req.url}`);
+const app = express();
 
-  switch (req.url) {
-    case '/':
-      sendFile("index.html", res);
-      break;
+app.get('/api', (req, res) => {
+  res.cookie('user', 'Alex', {expires: new Date(Date.now()+5000)});
+  res.json({
+    message: 'Welcome to api'
+  });
+});
 
-    case '/test':
-      res.writeHead(200, {
-        "Content-Type": "text/plaintext",
-        "Set-Cookie": "type=ninja;author=AVS"
-      });
-      // res.setHeader("Set-Cookie", "type=ninja");
-      res.end("Test page");
-      break;
+app.post('/apia/posts', (req, res) => {
 
-    default:
-      res.statusCode = 404;
-      res.end("Not found");
-  }
+});
 
-}).listen(port, host, () => {
-  console.log(`Server is up and running at ${host}:${port}`);
+app.listen(port, host, () => {
+  console.log(`Server is running at ${host}:${port}`);
 });
