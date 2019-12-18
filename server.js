@@ -1,10 +1,13 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
 const port = 8000;
 const host = "127.0.0.1";
 
 const app = express();
+
+app.use(cors());
 
 app.get('/api', (req, res) => {
   res.cookie('user', 'Alex', {expires: new Date(Date.now()+5000)});
